@@ -1,2 +1,1 @@
-# dbcdashboard
-A dashboard
+A Simple Albumns display
