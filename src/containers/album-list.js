@@ -10,78 +10,87 @@ class AlbumList extends Component {
   chartIds = [];
   loaded = false;
 
-  componentDidMount() {   
+  componentDidMount() {
+    console.log("component did mount");
     this.props.fetchProducts();
-    // Load the Visualization API and the corechart package.
-    google.charts.load('current', {'packages':['corechart']});
-
-    // Set a callback to run when the Google Visualization API is loaded.
-    self = this;
-    google.charts.setOnLoadCallback(function(){
-      self.loaded = true;
-      self.render();
+    this.loaded = true;
+  }
+  componentDidUpdate() {
+    console.log("component did update");
+    var self = this;
+    window.requestAnimationFrame(function() {
+      console.log("just finished painting");
+      self.drawAllCharts();
     });
-    console.log("MOUNTING");
+    
   }
 
 
-  shouldComponentUpdate() {
-    console.log("component should update")
-    //this.drawAllCharts();
-    return true;
-  }
+  drawChart(chartId) {
+    console.log(chartId);
 
+    console.log(document.getElementById(chartId));
+    //var oNewChartElement = document.createElement("div");
+    //oNewChartElement.setAttribute('class','chart-div' + oProject.id);
 
-  drawChart(iChartId) {
-    // Callback that creates and populates a data table,
-    // instantiates the pie chart, passes in the data and
-    // draws it.
+    var chart = c3.generate({
+      data: {
+          columns: [
+              ['In', 70],
+              ['base', 120],
+              ['Out', 100],
+              ['max', 80],
+              ['min', 20]
+          ],
+          type: 'gauge',
+          onclick: function (d, i) { console.log("onclick", d, i); },
+          onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+          onmouseout: function (d, i) { console.log("onmouseout", d, i); },
+          color: function (color, d) {
+              if(d=='base') return 'grey'
+              return d == 'In' ? '#a90d37' : '#ffffff';
+          }
+      },
+      label: false,
+      gauge: {
+          label: {
+              format: function(value, ratio , label) {
+                  if(label == 'base') return;
+                  return label + ' (' +value + ')';
+              },
+              show: true // to turn off the min/max labels.
+          },
+      min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+      max: 120, // 100 is default
+      units: 'K-Euros',
+    // for adjusting arc thickness
+      },// the three color levels for the percentage values.
+      size: {
+          width: 400
+      }
+    });
 
-    // Create the data table.
-    var data = new google.visualization.DataTable();
-    console.log("a");
-    data.addColumn('string', 'Topping');
-    console.log("b");
-    data.addColumn('number', 'Slices');
-    console.log("c");
-    data.addRows([
-      ['Mushrooms', 3],
-      ['Onions', 1],
-      ['Olives', 1],
-      ['Zucchini', 1],
-      ['Pepperoni', 2]
-    ]);
-    console.log("d");
-    // Set chart options
-    var options = {'title':'How Much Pizza I Ate Last Night',
-                   'width':400,
-                   'height':300};
-                   console.log("e");
-    // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.PieChart(document.getElementById(iChartId));
-    console.log("f");
-    chart.draw(data, options);
-    console.log("g");
+    var container = document.getElementById(chartId);
+    container.appendChild(chart.element);
   }
 
   drawAllCharts(){
-    console.log("drawing", this.chartIds);
+    console.log("drawing All");
     var self = this;
     for (var i  = 0 ; i < this.chartIds.length; i++){
-      console.log("hey");
+      self.drawChart(this.chartIds[i]);
     }
   }
 
   renderList() {
     return this.props.albums.items.map((album) => {
-      this.chartIds.push('chart_div_' + album.id);
-      this.drawChart('chart_div_' + album.id);
+      this.chartIds.push('chart-div-' + album.id);
       return (
-        <div key={album.id} onClick={this.drawChart('chart_div_' + album.id)}
+        <div key={album.id}
           className='main-div col-sm-6 card-gradient'>
           <div className='card-1 '>
             <div className='album-title'>{album.name}</div>
-            <div id={'chart_div_' + album.id} refs={'chart_div_' + album.id}></div>
+            <div id={'chart-div-' + album.id} ref={'chart-div-' + album.id}>hey guys</div>
           </div>
         </div>
       );

@@ -15,7 +15,7 @@ const fetchProductsError = error => ({
 function fetchProducts() {
   return dispatch => {
     dispatch(fetchProductsBegin());
-    return fetch("https://8ce4c9bc-fc9d-42c1-ba6a-d5f4a4658cf6.mock.pstmn.io/projects")
+    return fetch("http://localhost:8089/projects")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {

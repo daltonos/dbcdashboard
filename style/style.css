@@ -71,3 +71,7 @@ html, body {
 .detail-image-div {
     margin-bottom: 2rem;
 }
+
+.chart-div {
+    width: 100%;
+}
