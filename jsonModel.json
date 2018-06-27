@@ -7,7 +7,7 @@
         "creation-date": "23/07/2014",
         "owner": "David Meyer",
         "due-date": "27/09/2019",
-        "total-funding-goal": "90",
+        "total-funding-goal": "150",
         "minimum-funding-goal": "60",
         "total-amount-outstanding": "400",
         "total-amount-already-in": "800"
@@ -16,78 +16,34 @@
         "id": "1",
         "name": "Project B",
         "creation-date": "23/07/2014",
-        "owner": "David Meyer",
+        "owner": "Luiz Nano",
         "due-date": "27/09/2019",
-        "total-funding-goal": "32000000",
-        "minimum-funding-goal": "30000000",
-        "total-amount-outstanding": "12000000",
-        "total-amount-already-in": "6000000"
+        "total-funding-goal": "100",
+        "minimum-funding-goal": "60",
+        "total-amount-outstanding": "200",
+        "total-amount-already-in": "20"
       },
       {
         "id": "2",
         "name": "Project C",
         "creation-date": "23/07/2014",
-        "owner": "David Meyer",
+        "owner": "Dalton Silva",
         "due-date": "27/09/2019",
-        "total-funding-goal": "32000000",
-        "minimum-funding-goal": "30000000",
-        "total-amount-outstanding": "12000000",
-        "total-amount-already-in": "6000000"
+        "total-funding-goal": "1000",
+        "minimum-funding-goal": "500",
+        "total-amount-outstanding": "700",
+        "total-amount-already-in": "800"
       },
       {
         "id": "3",
         "name": "Project A",
         "creation-date": "23/07/2014",
-        "owner": "David Meyer",
+        "owner": "Edgar Peres",
         "due-date": "27/09/2019",
-        "total-funding-goal": "32000000",
-        "minimum-funding-goal": "30000000",
-        "total-amount-outstanding": "12000000",
-        "total-amount-already-in": "6000000"
-      },
-      {
-        "id": "4",
-        "name": "Project A",
-        "creation-date": "23/07/2014",
-        "owner": "David Meyer",
-        "due-date": "27/09/2019",
-        "total-funding-goal": "32000000",
-        "minimum-funding-goal": "30000000",
-        "total-amount-outstanding": "12000000",
-        "total-amount-already-in": "6000000"
-      },
-      {
-        "id": "5",
-        "name": "Project A",
-        "creation-date": "23/07/2014",
-        "owner": "David Meyer",
-        "due-date": "27/09/2019",
-        "total-funding-goal": "32000000",
-        "minimum-funding-goal": "30000000",
-        "total-amount-outstanding": "12000000",
-        "total-amount-already-in": "6000000"
-      },
-      {
-        "id": "6",
-        "name": "Project A",
-        "creation-date": "23/07/2014",
-        "owner": "David Meyer",
-        "due-date": "27/09/2019",
-        "total-funding-goal": "32000000",
-        "minimum-funding-goal": "30000000",
-        "total-amount-outstanding": "12000000",
-        "total-amount-already-in": "6000000"
-      },
-      {
-        "id": "7",
-        "name": "Project A",
-        "creation-date": "23/07/2014",
-        "owner": "David Meyer",
-        "due-date": "27/09/2019",
-        "total-funding-goal": "32000000",
-        "minimum-funding-goal": "30000000",
-        "total-amount-outstanding": "12000000",
-        "total-amount-already-in": "6000000"
+        "total-funding-goal": "90",
+        "minimum-funding-goal": "60",
+        "total-amount-outstanding": "400",
+        "total-amount-already-in": "800"
       }
     ]
   }

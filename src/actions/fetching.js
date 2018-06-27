@@ -15,7 +15,7 @@ const fetchProductsError = error => ({
 function fetchProducts() {
   return dispatch => {
     dispatch(fetchProductsBegin());
-    return fetch("http://localhost:8089/projects")
+    return fetch("https://api.myjson.com/bins/12ovae")
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {

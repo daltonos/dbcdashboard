@@ -2,11 +2,11 @@
 var chart = c3.generate({
     data: {
         columns: [
-            ['In', 70],
-            ['base', 120],
-            ['Out', 100],
-            ['max', 80],
-            ['min', 20]
+            ['In', oProject['total-amount-already-in']],
+              ['base', 120],
+              ['Out', oProject['total-amount-outstanding']],
+              ['max', oProject['total-funding-goal']],
+              ['min', oProject['minimum-funding-goal']]
         ],
         type: 'gauge',
         onclick: function (d, i) { console.log("onclick", d, i); },

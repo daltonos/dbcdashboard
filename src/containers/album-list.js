@@ -18,79 +18,74 @@ class AlbumList extends Component {
   componentDidUpdate() {
     console.log("component did update");
     var self = this;
-    window.requestAnimationFrame(function() {
-      console.log("just finished painting");
-      self.drawAllCharts();
-    });
+    self.drawAllCharts();
     
   }
 
 
-  drawChart(chartId) {
-    console.log(chartId);
-
-    console.log(document.getElementById(chartId));
-    //var oNewChartElement = document.createElement("div");
-    //oNewChartElement.setAttribute('class','chart-div' + oProject.id);
+  drawChart(oProject) {
+    console.log(oProject.id);
 
     var chart = c3.generate({
-      data: {
-          columns: [
-              ['In', 70],
-              ['base', 120],
-              ['Out', 100],
-              ['max', 80],
-              ['min', 20]
-          ],
-          type: 'gauge',
-          onclick: function (d, i) { console.log("onclick", d, i); },
-          onmouseover: function (d, i) { console.log("onmouseover", d, i); },
-          onmouseout: function (d, i) { console.log("onmouseout", d, i); },
-          color: function (color, d) {
-              if(d=='base') return 'grey'
-              return d == 'In' ? '#a90d37' : '#ffffff';
-          }
-      },
-      label: false,
-      gauge: {
-          label: {
-              format: function(value, ratio , label) {
-                  if(label == 'base') return;
-                  return label + ' (' +value + ')';
-              },
-              show: true // to turn off the min/max labels.
-          },
-      min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
-      max: 120, // 100 is default
-      units: 'K-Euros',
-    // for adjusting arc thickness
-      },// the three color levels for the percentage values.
-      size: {
-          width: 400
-      }
+        data: {
+            columns: [
+                ['Amount already in', 0]
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: 32
+        },
+        size: {
+            height: 200
+        },
+        axis: {
+            rotated: true
+        },
+        grid: {
+            y: {
+                lines: [{value: oProject['minimum-funding-goal'], class: 'threshold-line', text: 'Min'}, {value: oProject['total-funding-goal'], class: 'threshold-line', text: 'Max'}, {value: oProject['total-amount-outstanding'], class: 'threshold-line', text: 'Out'}]
+            }
+        }
     });
 
-    var container = document.getElementById(chartId);
+
+    setTimeout(function () {
+        chart.load({
+            columns: [
+                ['Amount already in', oProject['total-amount-already-in']]
+            ]
+        });
+    }, 1000);
+
+
+    var container = document.getElementById('chart-div-' + oProject.id);
     container.appendChild(chart.element);
   }
 
   drawAllCharts(){
     console.log("drawing All");
     var self = this;
-    for (var i  = 0 ; i < this.chartIds.length; i++){
-      self.drawChart(this.chartIds[i]);
-    }
+    this.props.albums.items.map((project) => {
+      self.drawChart(project);
+    });
   }
 
   renderList() {
     return this.props.albums.items.map((album) => {
-      this.chartIds.push('chart-div-' + album.id);
       return (
         <div key={album.id}
           className='main-div col-sm-6 card-gradient'>
           <div className='card-1 '>
-            <div className='album-title'>{album.name}</div>
-            <div id={'chart-div-' + album.id} ref={'chart-div-' + album.id}>hey guys</div>
+            <div>
+              <div className='att-line'>
+                <div className='project-title'>{album.name}</div>
+                <div className='right-att-1'>Owner: {album['owner']}</div>
+                <div className='left-att'>Start: {album['creation-date']}</div>
+                <div className='right-att-2'>End: {album['due-date']}</div>
+              </div>
+            </div>
+            <div id={'chart-div-' + album.id} ref={'chart-div-' + album.id} className='chart-div'></div>
           </div>
         </div>
       );
@@ -101,8 +96,9 @@ class AlbumList extends Component {
     if(this.loaded){
       return (
         <div className = 'container'>
-          <div id="album-items-container" className = 'album-items-container'>
+          <div className = 'projects-title-area'>
             <span className="title"> Projects </span>
+            <img src="/img/dbc-logo.svg" className='dbc-logo'/>
           </div>
           <div id="album-home">
             <div>
@@ -114,7 +110,8 @@ class AlbumList extends Component {
     } else {
       return (
         <div className = 'container'>
-          <span>Loading Charts Library</span>
+          <span className="title"> Loading Projects Charts </span>
+          <img src="/img/dbc-logo.svg" className='dbc-logo'/>
         </div>
       );
     }

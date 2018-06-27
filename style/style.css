@@ -15,8 +15,20 @@ html, body {
     position: relative;
 }
 
-.album-items-container {
-    position: relative;
+.projects-title-area {
+    padding: 30px 15px;
+    background: #fff;
+    border-bottom: 3px solid #a90d37;
+    border-radius: 0;
+    margin: 1rem;
+}
+
+.dbc-logo {
+    width: 220px;
+    height: 25px;
+    display: block;
+    float: right;
+    margin-right: 1rem;
 }
   
 .card-1 {
@@ -37,21 +49,6 @@ html, body {
     padding: 1rem;
 }
 
-.album-title {
-    padding: 1rem;
-    display: block;
-    line-height: 32px;
-    margin-bottom: 8px;
-    font-size: 24px;
-    font-weight: 300;
-    color: #212121;
-    text-transform: capitalize;
-}
-
-.album-items-container {
-    text-align: center;
-}
-
 .photoScreen {
     position: fixed;
     left: calc(50% - (300px + 2rem));
@@ -63,9 +60,11 @@ html, body {
 }
 
 .title {
-    margin: 4rem;
-    font-size: 24px;
-    font-weight: 300;
+    color: #29588c;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 30px 15px;
+    position: relative;
 }
 
 .detail-image-div {
@@ -74,4 +73,61 @@ html, body {
 
 .chart-div {
     width: 100%;
+    padding: 1rem;
+}
+
+.c3-legend-item {
+    display: none!important;
+}
+
+.threshold-line line{
+    stroke: #a90d37;
+    stroke-width: 2px;
+}
+
+.threshold-line text {
+    fill: #29588c;
+    font-size: 18px;
+}
+
+.att-line {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    margin-bottom: 1rem;
+}
+
+.project-title {
+    color: #29588c;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 30px;
+    padding-bottom: 1rem;
+    top:0;
+    left:0;
+    position: absolute;
+}
+
+.right-att-1 {
+    position: absolute;
+    top:0;
+    right:0;
+    padding: 30px;
+    padding-bottom: 1rem;
+}
+
+.right-att-2 {
+    position: absolute;
+    bottom:0;
+    right:0;
+    padding: 30px;
+    padding-top: 0;
+}
+
+.left-att {
+    position: absolute;
+    bottom:0;
+    left:0;
+    padding-top: 0;
+    padding: 30px;
 }
