@@ -38,7 +38,7 @@ class AlbumList extends Component {
             width: 32
         },
         size: {
-            height: 200
+            height: 100
         },
         axis: {
             rotated: true
