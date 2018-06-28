@@ -32,7 +32,7 @@ var chart = c3.generate({
         },
     min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
     max: 120, // 100 is default
-    units: 'K-Euros',
+    units: 'in Mio €',
  // for adjusting arc thickness
     },// the three color levels for the percentage values.
     size: {
