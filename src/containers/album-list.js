@@ -5,6 +5,7 @@ import selectScreen from '../actions/action_select_screen'
 import addChart from '../actions/action_add_chart'
 import {bindActionCreators} from 'redux'
 import fetchProducts from "../actions/fetching";
+import { FormattedMessage } from 'react-intl';
 
 class AlbumList extends Component {
   chartIds = [];
@@ -79,11 +80,17 @@ class AlbumList extends Component {
           <div className='card-1 '>
             <div>
               <div className='att-line'>
-                <div className='project-title'>{album.name}</div>
-                <div className='right-att-1'>Owner: {album['owner']}</div>
-                <div className='left-att'>Start: {album['creation-date']}</div>
-                <div className='right-att-2'>End: {album['due-date']}</div>
-              </div>
+                <span className='pull-left project-title'>{album.name}</span>
+                <span className='pull-right'><FormattedMessage id="project_owner_init"/>: {album['owner']}</span>
+              </div><br/>
+              <span className='att-line'>
+                <span className='pull-left'><FormattedMessage id="city"/>: {album['city']}</span>
+                <span className='pull-right'><FormattedMessage id="street"/>: {album['street']}</span>
+              </span>
+              <span className='att-line'>
+                <span className='pull-left'><FormattedMessage id="bank"/>: {album['bank']}</span>
+                <span className='pull-right'><FormattedMessage id="due_date"/>: {album['due-date']}</span>
+              </span>
             </div>
             <div id={'chart-div-' + album.id} ref={'chart-div-' + album.id} className='chart-div'></div>
           </div>
