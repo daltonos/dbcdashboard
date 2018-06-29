@@ -3,24 +3,24 @@
 /* German translations */
 let i18nConfig = {
   messages: {
-    "max": "Max",
-    "min": "Min",
-    "out": "Out",
-    "in": "In",
-    "minimum_funding_goal": "Minimum Funding Goal",
-    "maximum_funding_goal": "Maximum Funding Goal",
-    "amount_already_in": "Amount already in",
-    "amount_sent_out": "Amount sent out",
-    "project": "Project",
-    "project_name": "Project Name",
+    "max": "max",
+    "min": "min",
+    "out": "out",
+    "in": "in",
+    "minimum_funding_goal": "Mindestzeichnungsbetrag",
+    "maximum_funding_goal": "Maximalzeichnungsbetrag",
+    "amount_already_in": "Eingegangene Zeichnungen",
+    "amount_sent_out": "Verschicktes Zeichnungsvolumen",
+    "project": "Projekt",
+    "project_name": "Projektname",
     "city": "Ort",
     "street": "Straße",
-    "project_owner": "Project Owner",
+    "project_owner": "Projekt Manager",
     "project_owner_init": "PM",
-    "issuing_bank": "Issuing Bank",
+    "issuing_bank": "Emissionsbank",
     "bank": "Bank",
-    "due_date": "Due date",
-    "chart_currency_side_note": "The currency in this chart is being shown on the magnitude of 'Millions of Euross', with decimal precision of 3 digits after the comma."
+    "due_date": "Emissionstermin", /* You should rename due_date to issue_date. That would be more precise. */
+    "chart_currency_side_note": "The currency in this chart is being shown on the magnitude of 'Millions of Euros', with decimal precision of 3 digits after the comma."
   }
 };
 
