@@ -12,8 +12,8 @@
         "due-date": "27/09/2019",
         "total-funding-goal": "150",
         "minimum-funding-goal": "60",
-        "total-amount-outstanding": "400",
-        "total-amount-already-in": "800"
+        "total-amount-outstanding": "280",
+        "total-amount-already-in": "220"
       },
       {
         "id": "1",
@@ -52,10 +52,10 @@
         "owner": "Edgar Peres",
         "bank": "Itaú",
         "due-date": "27/09/2019",
-        "total-funding-goal": "90",
-        "minimum-funding-goal": "60",
-        "total-amount-outstanding": "400",
-        "total-amount-already-in": "800"
+        "total-funding-goal": "700",
+        "minimum-funding-goal": "100",
+        "total-amount-outstanding": "1200",
+        "total-amount-already-in": "300"
       }
     ]
   }
