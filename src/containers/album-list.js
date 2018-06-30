@@ -23,39 +23,129 @@ class AlbumList extends Component {
     
   }
 
+  getLabel(text, value) {
+    return text + " (" + value + ")";
+  }
+
+  stickLabels () {
+    //var chartWidth = d3.selectAll(".c3-event-rect")[0].getBoundingClientRect().width;
+    //var minTextWidth = d3.selectAll(".min-line text")[0].getBoundingClientRect().width;
+    //var maxTextWidth = d3.selectAll(".max-line text")[0].getBoundingClientRect().width;
+    var outTextWidth, minTextWidth, maxTextWidth;
+    d3.selectAll(".out-line text")._groups[0].forEach(htmlObj => outTextWidth = htmlObj.getBoundingClientRect().width);
+    d3.selectAll(".min-line text")._groups[0].forEach(htmlObj => minTextWidth = htmlObj.getBoundingClientRect().width);
+    d3.selectAll(".max-line text")._groups[0].forEach(htmlObj => maxTextWidth = htmlObj.getBoundingClientRect().width);
+
+
+    /* outTextWidth =0;
+    minTextWidth =0;
+    maxTextWidth =0; */
+    //console.log(Math.floor(outTextWidth));
+    
+    d3.selectAll(".out-line text")
+        .attr("x", function(d) {
+            var width =  /* outTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(outTextWidth) + 16 : */ Math.floor(d3.select(this).attr("y"));
+            return width;
+        });
+    d3.selectAll(".min-line text")
+        .attr("x", function(d) {
+            var width =  /* minTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(minTextWidth) + 16  : */ Math.floor(d3.select(this).attr("y"));
+            return width;
+        });
+    d3.selectAll(".max-line text")
+        .attr("x", function(d) {
+            var width =  /* maxTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(maxTextWidth) + 16 : */ Math.floor(d3.select(this).attr("y"));
+            return width;
+        });
+
+    d3.selectAll(".out-line line")
+        .attr("y1", 28);
+    d3.selectAll(".min-line line")
+        .attr("y1", 42);
+    d3.selectAll(".max-line line")
+        .attr("y1", 14);
+    
+    d3.selectAll(".threshold-line text")
+        .attr("dy", function(d) {
+          var textSel = d3.select(this);
+          return -textSel.attr("y") + 20;
+        }).attr("transform", 'rotate(0)');
+  }
+
 
   drawChart(oProject) {
-    console.log(oProject.id);
+
+    var trueMaxLabel = 'maximum_funding_goal';
+    var trueMax = oProject['total-funding-goal'];
+    var secondMaxLabel = 'amount_sent_out';
+    var secondMax = oProject['total-amount-outstanding'];
+    if(Number(trueMax) < Number(secondMax)){
+      var tm = trueMax;
+      var tmLabel = trueMaxLabel;
+
+      trueMax = secondMax;
+      trueMaxLabel = secondMaxLabel;
+
+      secondMax = tm;
+      secondMaxLabel = tmLabel;
+    }
 
     var chart = c3.generate({
         data: {
             columns: [
-                ['Amount already in', 0]
+                ['in', 0],
+                ['missing', oProject['total-funding-goal']*2]
             ],
-            type: 'bar'
+            type: 'bar',
+            colors: {
+              'in': function(d) {
+                return d.value < 500 ? '#C00' : '#0C0'
+              },
+              'missing': 'grey'
+            },
+            groups: [
+              ['in', 'missing']
+            ],
+            order: false
         },
         bar: {
             width: 32
         },
         size: {
-            height: 100
+            height: 200
         },
         axis: {
-            rotated: true
+            rotated: true,
+            y: {
+              show: false,
+              max: oProject['total-funding-goal']*2,
+              min: 0,
+            },
+            x: {
+              show: false
+            }
         },
         grid: {
-            y: {
-                lines: [{value: oProject['minimum-funding-goal'], class: 'threshold-line', text: 'Min'}, {value: oProject['total-funding-goal'], class: 'threshold-line', text: 'Max'}, {value: oProject['total-amount-outstanding'], class: 'threshold-line', text: 'Out'}]
-            }
-        }
+          y: {
+              lines: [{value: oProject['minimum-funding-goal'], class: 'threshold-line min-line', text: this.getLabel('Min', oProject['minimum-funding-goal'])},
+              {value: oProject['total-funding-goal'], class: 'threshold-line max-line', text: this.getLabel('Max', oProject['total-funding-goal'])},
+              {value: oProject['total-amount-outstanding'], class: 'threshold-line out-line', text: this.getLabel('Out', oProject['total-amount-outstanding'])}]
+          }
+        },
+        tooltip: {
+          show: false
+        },
+        onrendered: this.stickLabels
     });
-
+    var self = this;
 
     setTimeout(function () {
-        chart.load({
-            columns: [
-                ['Amount already in', oProject['total-amount-already-in']]
-            ]
+      chart.load({
+          columns: [
+              ['in', oProject['total-amount-already-in']],
+              ['missing', oProject['total-funding-goal']*2 - oProject['total-amount-already-in']]
+            ],
+            duration: 1500
         });
     }, 1000);
 

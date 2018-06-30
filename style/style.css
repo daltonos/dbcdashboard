@@ -94,7 +94,19 @@ html, body {
 
 .threshold-line text {
     fill: #29588c;
-    font-size: 18px;
+    font-size: 12px;
+}
+
+.out-line text {
+    transform: translateY(14px);
+}
+
+.min-line text {
+    transform: translateY(28px);
+}
+
+.c3-chart-bars {
+    transform: translateY(68px);
 }
 
 .att-line {
