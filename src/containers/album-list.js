@@ -27,7 +27,8 @@ class AlbumList extends Component {
     return text + " (" + value + ")";
   }
 
-  stickLabels () {
+  stickLabels(e) {
+    console.log("fixing sticks", e);
     //var chartWidth = d3.selectAll(".c3-event-rect")[0].getBoundingClientRect().width;
     //var minTextWidth = d3.selectAll(".min-line text")[0].getBoundingClientRect().width;
     //var maxTextWidth = d3.selectAll(".max-line text")[0].getBoundingClientRect().width;
@@ -59,17 +60,42 @@ class AlbumList extends Component {
         });
 
     d3.selectAll(".out-line line")
-        .attr("y1", 28);
+        .attr("y1", 28).attr("y2", 78.5);
     d3.selectAll(".min-line line")
-        .attr("y1", 42);
+        .attr("y1", 42).attr("y2", 78.5);
     d3.selectAll(".max-line line")
-        .attr("y1", 14);
+        .attr("y1", 14).attr("y2", 78.5);
     
     d3.selectAll(".threshold-line text")
         .attr("dy", function(d) {
           var textSel = d3.select(this);
           return -textSel.attr("y") + 20;
         }).attr("transform", 'rotate(0)');
+
+    d3.select(".chart-div .c3-ygrid-lines")
+        .append("circle")
+        .attr("cx",190)
+        .attr("cy", 82.5)
+        .attr("r", 10)
+        .attr("fill",'white')
+        .attr("stroke",'grey')
+        .attr("stroke-width",2);
+
+    d3.select(".chart-div .c3-ygrid-lines")
+        .append("text").text('220').attr("transform-origin","center")
+        .attr("x",190)
+        .attr("y", 120.5)
+        .attr("fill", 'black').attr("height",'30');
+  }
+
+  onRenderedChart () {
+    console.log("onrendered");
+    //this.stickLabels(1,2);
+  }
+
+  onResizedChart () {
+    console.log("onresized");
+    //this.stickLabels();
   }
 
 
@@ -109,7 +135,7 @@ class AlbumList extends Component {
             order: false
         },
         bar: {
-            width: 32
+            width: 8
         },
         size: {
             height: 200
@@ -120,9 +146,11 @@ class AlbumList extends Component {
               show: false,
               max: oProject['total-funding-goal']*2,
               min: 0,
+              padding: {top: 0, bottom: 0}
             },
             x: {
-              show: false
+              show: false,
+              padding: {left: 0, right: 0}
             }
         },
         grid: {
@@ -135,9 +163,9 @@ class AlbumList extends Component {
         tooltip: {
           show: false
         },
+        onresized: this.stickLabels,
         onrendered: this.stickLabels
     });
-    var self = this;
 
     setTimeout(function () {
       chart.load({

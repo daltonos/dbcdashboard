@@ -80,7 +80,6 @@ html, body {
 
 .chart-div {
     width: 100%;
-    padding: 1rem;
 }
 
 .c3-legend-item {
@@ -88,8 +87,8 @@ html, body {
 }
 
 .threshold-line line{
-    stroke: #a90d37;
-    stroke-width: 2px;
+    stroke: grey;
+    stroke-width: 1px;
 }
 
 .threshold-line text {
@@ -106,7 +105,7 @@ html, body {
 }
 
 .c3-chart-bars {
-    transform: translateY(68px);
+    transform: translateY(0);
 }
 
 .att-line {
@@ -120,4 +119,8 @@ html, body {
     text-decoration: none;
     font-size: 18px;
     position: absolute;
+}
+
+.c3-target-in {
+    border-radius: 0px 100px 100px 0px;
 }
