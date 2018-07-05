@@ -27,36 +27,19 @@ class AlbumList extends Component {
     return text + " (" + value + ")";
   }
 
-  stickLabels(e) {
-    console.log("fixing sticks", e);
-    //var chartWidth = d3.selectAll(".c3-event-rect")[0].getBoundingClientRect().width;
-    //var minTextWidth = d3.selectAll(".min-line text")[0].getBoundingClientRect().width;
-    //var maxTextWidth = d3.selectAll(".max-line text")[0].getBoundingClientRect().width;
-    var outTextWidth, minTextWidth, maxTextWidth;
-    d3.selectAll(".out-line text")._groups[0].forEach(htmlObj => outTextWidth = htmlObj.getBoundingClientRect().width);
-    d3.selectAll(".min-line text")._groups[0].forEach(htmlObj => minTextWidth = htmlObj.getBoundingClientRect().width);
-    d3.selectAll(".max-line text")._groups[0].forEach(htmlObj => maxTextWidth = htmlObj.getBoundingClientRect().width);
+  stickLabels() {
 
-
-    /* outTextWidth =0;
-    minTextWidth =0;
-    maxTextWidth =0; */
-    //console.log(Math.floor(outTextWidth));
-    
     d3.selectAll(".out-line text")
         .attr("x", function(d) {
-            var width =  /* outTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(outTextWidth) + 16 : */ Math.floor(d3.select(this).attr("y"));
-            return width;
+            return Math.floor(d3.select(this).attr("y"));
         });
     d3.selectAll(".min-line text")
         .attr("x", function(d) {
-            var width =  /* minTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(minTextWidth) + 16  : */ Math.floor(d3.select(this).attr("y"));
-            return width;
+            return Math.floor(d3.select(this).attr("y"));
         });
     d3.selectAll(".max-line text")
         .attr("x", function(d) {
-            var width =  /* maxTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(maxTextWidth) + 16 : */ Math.floor(d3.select(this).attr("y"));
-            return width;
+            return Math.floor(d3.select(this).attr("y"));
         });
 
     d3.selectAll(".out-line line")
@@ -72,30 +55,40 @@ class AlbumList extends Component {
           return -textSel.attr("y") + 20;
         }).attr("transform", 'rotate(0)');
 
-    d3.select(".chart-div .c3-ygrid-lines")
-        .append("circle")
-        .attr("cx",190)
+    d3.selectAll(".chart-div").attr("y",function(){
+      var inBar = d3.select(this).select(".c3-target-in");
+      var inBarWidth = inBar.node().getBoundingClientRect().width;
+
+      var gridArea = d3.select(this).select(".c3-ygrid-lines");
+      var circle = gridArea.select(".circle-indicator");
+      var textIndicator = gridArea.select(".text-indicator");
+      var text = d3.select(this).select(".c3-axis-y-label").text();
+      console.log(text);
+
+      if(circle.node()) {
+        circle.attr("cx", inBarWidth)
         .attr("cy", 82.5)
         .attr("r", 10)
         .attr("fill",'white')
         .attr("stroke",'grey')
         .attr("stroke-width",2);
+      } else {
+        gridArea.append("circle").attr("class", "circle-indicator");
+      }
 
-    d3.select(".chart-div .c3-ygrid-lines")
-        .append("text").text('220').attr("transform-origin","center")
-        .attr("x",190)
-        .attr("y", 120.5)
+      if(textIndicator.node()) {
+        textIndicator.text(text)
+        .attr("y", 140)
         .attr("fill", 'black').attr("height",'30');
-  }
 
-  onRenderedChart () {
-    console.log("onrendered");
-    //this.stickLabels(1,2);
-  }
+        var textWidth = textIndicator.node().getBoundingClientRect().width;
 
-  onResizedChart () {
-    console.log("onresized");
-    //this.stickLabels();
+        textIndicator.attr("x", Math.floor(inBarWidth - textWidth/2));
+      } else {
+        gridArea.append("text").attr("class", "text-indicator");
+      }
+    })
+
   }
 
 
@@ -146,7 +139,11 @@ class AlbumList extends Component {
               show: false,
               max: oProject['total-funding-goal']*2,
               min: 0,
-              padding: {top: 0, bottom: 0}
+              padding: {top: 0, bottom: 0},
+              label: {
+                text: "In: " + oProject['total-amount-already-in'],
+                position: 'outer-center'
+              }
             },
             x: {
               show: false,
@@ -163,7 +160,6 @@ class AlbumList extends Component {
         tooltip: {
           show: false
         },
-        onresized: this.stickLabels,
         onrendered: this.stickLabels
     });
 

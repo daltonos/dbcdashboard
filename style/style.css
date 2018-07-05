@@ -124,3 +124,7 @@ html, body {
 .c3-target-in {
     border-radius: 0px 100px 100px 0px;
 }
+
+.text-indicator {
+    font-size: 32px;
+}
