@@ -69,8 +69,7 @@ class AlbumList extends Component {
         circle.attr("cx", inBarWidth)
         .attr("cy", 82.5)
         .attr("r", 10)
-        .attr("fill",'white')
-        .attr("stroke",'grey')
+        .attr("fill",'#CC0000')
         .attr("stroke-width",2);
       } else {
         gridArea.append("circle").attr("class", "circle-indicator");
