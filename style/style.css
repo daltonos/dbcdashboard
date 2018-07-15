@@ -130,3 +130,7 @@ html, body {
 .text-indicator {
     font-size: 32px;
 }
+
+.subtitle {
+    font-weight: bold;
+}

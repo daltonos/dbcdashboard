@@ -69,8 +69,10 @@ class AlbumList extends Component {
         circle.attr("cx", inBarWidth)
         .attr("cy", 82.5)
         .attr("r", 10)
-        .attr("fill",'#CC0000')
-        .attr("stroke-width",2);
+        .attr("fill",'white')
+        .attr("fill",'white')
+        .attr("stroke",'black')
+        .attr("stroke-width",1);
       } else {
         gridArea.append("circle").attr("class", "circle-indicator");
       }
@@ -93,9 +95,9 @@ class AlbumList extends Component {
 
   drawChart(oProject) {
 
-    var trueMaxLabel = 'maximum_funding_goal';
+    var trueMaxLabel = 'max';
     var trueMax = oProject['total-funding-goal'];
-    var secondMaxLabel = 'amount_sent_out';
+    var secondMaxLabel = 'out';
     var secondMax = oProject['total-amount-outstanding'];
     if(Number(trueMax) < Number(secondMax)){
       var tm = trueMax;
@@ -152,8 +154,8 @@ class AlbumList extends Component {
         grid: {
           y: {
               lines: [{value: oProject['minimum-funding-goal'], class: 'threshold-line min-line', text: this.getLabel('Min', oProject['minimum-funding-goal'])},
-              {value: oProject['total-funding-goal'], class: 'threshold-line max-line', text: this.getLabel('Max', oProject['total-funding-goal'])},
-              {value: oProject['total-amount-outstanding'], class: 'threshold-line out-line', text: this.getLabel('Out', oProject['total-amount-outstanding'])}]
+              {value: trueMax, class: 'threshold-line max-line', text: this.getLabel(trueMaxLabel, trueMax)},
+              {value: secondMax, class: 'threshold-line out-line', text: this.getLabel(secondMaxLabel, secondMax)}]
           }
         },
         tooltip: {
@@ -194,15 +196,15 @@ class AlbumList extends Component {
             <div>
               <div className='att-line'>
                 <span className='pull-left project-title'>{album.name}</span>
-                <span className='pull-right'><FormattedMessage id="project_owner_init"/>: {album['owner']}</span>
+                <span className='pull-right'><span className='subtitle'><FormattedMessage id="project_owner_init"/>:</span> {album['owner']}</span>
               </div><br/>
               <span className='att-line'>
-                <span className='pull-left'><FormattedMessage id="city"/>: {album['city']}</span>
-                <span className='pull-right'><FormattedMessage id="street"/>: {album['street']}</span>
+                <span className='pull-left'><span className='subtitle'><FormattedMessage id="city"/>:</span> {album['city']}</span>
+                <span className='pull-right'><span className='subtitle'><FormattedMessage id="bank"/>:</span> {album['bank']}</span>
               </span>
               <span className='att-line'>
-                <span className='pull-left'><FormattedMessage id="bank"/>: {album['bank']}</span>
-                <span className='pull-right'><FormattedMessage id="due_date"/>: {album['due-date']}</span>
+                <span className='pull-left'><span className='subtitle'><FormattedMessage id="street"/>:</span> {album['street']}</span>
+                <span className='pull-right'><span className='subtitle'><FormattedMessage id="due_date"/>:</span> {album['due-date']}</span>
               </span>
             </div>
             <div id={'chart-div-' + album.id} ref={'chart-div-' + album.id} className='chart-div'></div>
