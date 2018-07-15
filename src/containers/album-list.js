@@ -111,8 +111,8 @@ class AlbumList extends Component {
     var chart = c3.generate({
         data: {
             columns: [
-              ['in', oProject['total-amount-already-in']],
-              ['missing', oProject['total-funding-goal']*2 - oProject['total-amount-already-in']]
+                ['in', 0],
+                ['missing', oProject['total-funding-goal']*2]
             ],
             type: 'bar',
             colors: {
@@ -161,6 +161,16 @@ class AlbumList extends Component {
         },
         onrendered: this.stickLabels
     });
+
+    setTimeout(function () {
+      chart.load({
+          columns: [
+              ['in', oProject['total-amount-already-in']],
+              ['missing', oProject['total-funding-goal']*2 - oProject['total-amount-already-in']]
+            ],
+            duration: 0
+        });
+    }, 100);
 
 
     var container = document.getElementById('chart-div-' + oProject.id);

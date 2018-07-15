@@ -80,6 +80,8 @@ html, body {
 
 .chart-div {
     width: 100%;
+    margin-bottom: -5rem;
+    margin-top: 5rem;
 }
 
 .c3-legend-item {
