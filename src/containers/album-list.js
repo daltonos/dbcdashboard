@@ -72,7 +72,7 @@ class AlbumList extends Component {
         .attr("fill",'white')
         .attr("fill",'white')
         .attr("stroke",'black')
-        .attr("stroke-width",1);
+        .attr("stroke-width",1.5);
       } else {
         gridArea.append("circle").attr("class", "circle-indicator");
       }
