@@ -1,0 +1,42 @@
+{
+    "success": true,
+    "projects": [
+        {
+            "id": "IEABTDXZI4FX535S",
+            "name": "200 - Company 1",
+            "issue_date": "2018-09-01",
+            "owner": "Peter Sugar",
+            "total_funding_goal": "2500",
+            "city": "Berlin",
+            "bank": "Best Bank of Berlin",
+            "street": "Some Street"
+        },
+        {
+            "id": "IEABTDXZI4HTCFO3",
+            "name": "201 - Company 2 - Person 2",
+            "issue_date": "2018-09-15",
+            "owner": "Willy Wonka",
+            "city": "Berlin",
+            "total_funding_goal": "2500"
+        },
+        {
+            "id": "IEABTDXZI4HT3MJA",
+            "name": "202 - Nuevo Company 3",
+            "issue_date": "2018-09-28",
+            "owner": "Vanessa Castle",
+            "total_funding_goal": "3000.0",
+            "city": "Berlin-Pankow",
+            "street": "Streety",
+            "bank": "Best Bank of Berlin"
+        },
+        {
+            "id": "IEABTDXZI4HVCGFT",
+            "name": "Ray Jay Co.",
+            "issue_date": "2018-10-10",
+            "owner": "Peter Sugar",
+            "total_funding_goal": "3000.0",
+            "city": "M\u00fcnchen",
+            "bank": "Best Bank of Munich"
+        }
+    ]
+}
