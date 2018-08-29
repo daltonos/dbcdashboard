@@ -13,7 +13,7 @@ var chart = c3.generate({
     },
     grid: {
         y: {
-            lines: [{value: oProject['minimum-funding-goal'], text: 'Min'}, {value: oProject['total-funding-goal'], class: 'grid800', text: 'Max'}, {value: oProject['total-amount-outstanding'], class: 'grid800', text: 'Out'}]
+            lines: [{value: oProject['minimum-funding-goal'], text: 'Min'}, {value: oProject['total_funding_goal'], class: 'grid800', text: 'Max'}, {value: oProject['total_amount_out'], class: 'grid800', text: 'Out'}]
         }
     }
 });

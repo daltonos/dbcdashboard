@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "projects": [
+    {
+      "id": "IEABTDXZI4FX535F",
+      "name": "126 ",
+      "issue_date": "2018-09-14",
+      "owner": "H Sugar",
+      "total_funding_goal": "500",
+      "city": "Berlin",
+      "bank": "OHMYGOD",
+      "street": "Some Street",
+      "total_amount_out": "100",
+      "total_amount_in": "60"
+    },
+    {
+      "id": "IEABTDXZI4HTCFO3",
+      "name": "129",
+      "issue_date": "2018-09-12",
+      "owner": "Some Dude",
+      "city": "Berlin",
+      "total_funding_goal": "1800",
+      "bank": "OMS",
+      "total_amount_out": "1000",
+      "total_amount_in": "710"
+    }
+  ]
+}

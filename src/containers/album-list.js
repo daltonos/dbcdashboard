@@ -96,9 +96,9 @@ class AlbumList extends Component {
   drawChart(oProject) {
 
     var trueMaxLabel = 'max';
-    var trueMax = oProject['total-funding-goal'];
+    var trueMax = oProject['total_funding_goal'];
     var secondMaxLabel = 'out';
-    var secondMax = oProject['total-amount-outstanding'];
+    var secondMax = oProject['total_amount_out'];
     if(Number(trueMax) < Number(secondMax)){
       var tm = trueMax;
       var tmLabel = trueMaxLabel;
@@ -114,7 +114,7 @@ class AlbumList extends Component {
         data: {
             columns: [
                 ['in', 0],
-                ['missing', oProject['total-funding-goal']*2]
+                ['missing', oProject['total_funding_goal']*2]
             ],
             type: 'bar',
             colors: {
@@ -138,11 +138,11 @@ class AlbumList extends Component {
             rotated: true,
             y: {
               show: false,
-              max: oProject['total-funding-goal']*2,
+              max: oProject['total_funding_goal']*2,
               min: 0,
               padding: {top: 0, bottom: 0},
               label: {
-                text: "In: " + oProject['total-amount-already-in'],
+                text: "In: " + oProject['total_amount_in'],
                 position: 'outer-center'
               }
             },
@@ -167,8 +167,8 @@ class AlbumList extends Component {
     setTimeout(function () {
       chart.load({
           columns: [
-              ['in', oProject['total-amount-already-in']],
-              ['missing', oProject['total-funding-goal']*2 - oProject['total-amount-already-in']]
+              ['in', oProject['total_amount_in']],
+              ['missing', oProject['total_funding_goal']*2 - oProject['total_amount_in']]
             ],
             duration: 0
         });
@@ -204,7 +204,7 @@ class AlbumList extends Component {
               </span>
               <span className='att-line'>
                 <span className='pull-left'><span className='subtitle'><FormattedMessage id="street"/>:</span> {album['street']}</span>
-                <span className='pull-right'><span className='subtitle'><FormattedMessage id="due_date"/>:</span> {album['due-date']}</span>
+                <span className='pull-right'><span className='subtitle'><FormattedMessage id="due_date"/>:</span> {album['issue_date']}</span>
               </span>
             </div>
             <div id={'chart-div-' + album.id} ref={'chart-div-' + album.id} className='chart-div'></div>
