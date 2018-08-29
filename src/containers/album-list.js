@@ -27,58 +27,78 @@ class AlbumList extends Component {
     return text + " (" + value + ")";
   }
 
-  stickLabels () {
-    //var chartWidth = d3.selectAll(".c3-event-rect")[0].getBoundingClientRect().width;
-    //var minTextWidth = d3.selectAll(".min-line text")[0].getBoundingClientRect().width;
-    //var maxTextWidth = d3.selectAll(".max-line text")[0].getBoundingClientRect().width;
-    var outTextWidth, minTextWidth, maxTextWidth;
-    d3.selectAll(".out-line text")._groups[0].forEach(htmlObj => outTextWidth = htmlObj.getBoundingClientRect().width);
-    d3.selectAll(".min-line text")._groups[0].forEach(htmlObj => minTextWidth = htmlObj.getBoundingClientRect().width);
-    d3.selectAll(".max-line text")._groups[0].forEach(htmlObj => maxTextWidth = htmlObj.getBoundingClientRect().width);
+  stickLabels() {
 
-
-    /* outTextWidth =0;
-    minTextWidth =0;
-    maxTextWidth =0; */
-    //console.log(Math.floor(outTextWidth));
-    
     d3.selectAll(".out-line text")
         .attr("x", function(d) {
-            var width =  /* outTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(outTextWidth) + 16 : */ Math.floor(d3.select(this).attr("y"));
-            return width;
+            return Math.floor(d3.select(this).attr("y"));
         });
     d3.selectAll(".min-line text")
         .attr("x", function(d) {
-            var width =  /* minTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(minTextWidth) + 16  : */ Math.floor(d3.select(this).attr("y"));
-            return width;
+            return Math.floor(d3.select(this).attr("y"));
         });
     d3.selectAll(".max-line text")
         .attr("x", function(d) {
-            var width =  /* maxTextWidth > 0 ? Math.floor(d3.select(this).attr("y")) + Math.floor(maxTextWidth) + 16 : */ Math.floor(d3.select(this).attr("y"));
-            return width;
+            return Math.floor(d3.select(this).attr("y"));
         });
 
     d3.selectAll(".out-line line")
-        .attr("y1", 28);
+        .attr("y1", 28).attr("y2", 78.5);
     d3.selectAll(".min-line line")
-        .attr("y1", 42);
+        .attr("y1", 42).attr("y2", 78.5);
     d3.selectAll(".max-line line")
-        .attr("y1", 14);
+        .attr("y1", 14).attr("y2", 78.5);
     
     d3.selectAll(".threshold-line text")
         .attr("dy", function(d) {
           var textSel = d3.select(this);
           return -textSel.attr("y") + 20;
         }).attr("transform", 'rotate(0)');
+
+    d3.selectAll(".chart-div").attr("y",function(){
+      var inBar = d3.select(this).select(".c3-target-in");
+      var inBarWidth = inBar.node().getBoundingClientRect().width;
+
+      var gridArea = d3.select(this).select(".c3-ygrid-lines");
+      var circle = gridArea.select(".circle-indicator");
+      var textIndicator = gridArea.select(".text-indicator");
+      var text = d3.select(this).select(".c3-axis-y-label").text();
+      console.log(text);
+
+      if(circle.node()) {
+        circle.attr("cx", inBarWidth)
+        .attr("cy", 82.5)
+        .attr("r", 10)
+        .attr("fill",'white')
+        .attr("fill",'white')
+        .attr("stroke",'black')
+        .attr("stroke-width",1.5);
+      } else {
+        gridArea.append("circle").attr("class", "circle-indicator");
+      }
+
+      if(textIndicator.node()) {
+        textIndicator.text(text)
+        .attr("y", 140)
+        .attr("fill", 'black').attr("height",'30');
+
+        var textWidth = textIndicator.node().getBoundingClientRect().width;
+
+        textIndicator.attr("x", Math.floor(inBarWidth - textWidth/2));
+      } else {
+        gridArea.append("text").attr("class", "text-indicator");
+      }
+    })
+
   }
 
 
   drawChart(oProject) {
 
-    var trueMaxLabel = 'maximum_funding_goal';
-    var trueMax = oProject['total-funding-goal'];
-    var secondMaxLabel = 'amount_sent_out';
-    var secondMax = oProject['total-amount-outstanding'];
+    var trueMaxLabel = 'max';
+    var trueMax = oProject['total_funding_goal'];
+    var secondMaxLabel = 'out';
+    var secondMax = oProject['total_amount_out'];
     if(Number(trueMax) < Number(secondMax)){
       var tm = trueMax;
       var tmLabel = trueMaxLabel;
@@ -94,7 +114,7 @@ class AlbumList extends Component {
         data: {
             columns: [
                 ['in', 0],
-                ['missing', oProject['total-funding-goal']*2]
+                ['missing', oProject['total_funding_goal']*2]
             ],
             type: 'bar',
             colors: {
@@ -109,7 +129,7 @@ class AlbumList extends Component {
             order: false
         },
         bar: {
-            width: 32
+            width: 8
         },
         size: {
             height: 200
@@ -118,18 +138,24 @@ class AlbumList extends Component {
             rotated: true,
             y: {
               show: false,
-              max: oProject['total-funding-goal']*2,
+              max: oProject['total_funding_goal']*2,
               min: 0,
+              padding: {top: 0, bottom: 0},
+              label: {
+                text: "In: " + oProject['total_amount_in'],
+                position: 'outer-center'
+              }
             },
             x: {
-              show: false
+              show: false,
+              padding: {left: 0, right: 0}
             }
         },
         grid: {
           y: {
               lines: [{value: oProject['minimum-funding-goal'], class: 'threshold-line min-line', text: this.getLabel('Min', oProject['minimum-funding-goal'])},
-              {value: oProject['total-funding-goal'], class: 'threshold-line max-line', text: this.getLabel('Max', oProject['total-funding-goal'])},
-              {value: oProject['total-amount-outstanding'], class: 'threshold-line out-line', text: this.getLabel('Out', oProject['total-amount-outstanding'])}]
+              {value: trueMax, class: 'threshold-line max-line', text: this.getLabel(trueMaxLabel, trueMax)},
+              {value: secondMax, class: 'threshold-line out-line', text: this.getLabel(secondMaxLabel, secondMax)}]
           }
         },
         tooltip: {
@@ -137,17 +163,16 @@ class AlbumList extends Component {
         },
         onrendered: this.stickLabels
     });
-    var self = this;
 
     setTimeout(function () {
       chart.load({
           columns: [
-              ['in', oProject['total-amount-already-in']],
-              ['missing', oProject['total-funding-goal']*2 - oProject['total-amount-already-in']]
+              ['in', oProject['total_amount_in']],
+              ['missing', oProject['total_funding_goal']*2 - oProject['total_amount_in']]
             ],
-            duration: 1500
+            duration: 0
         });
-    }, 1000);
+    }, 100);
 
 
     var container = document.getElementById('chart-div-' + oProject.id);
@@ -171,15 +196,15 @@ class AlbumList extends Component {
             <div>
               <div className='att-line'>
                 <span className='pull-left project-title'>{album.name}</span>
-                <span className='pull-right'><FormattedMessage id="project_owner_init"/>: {album['owner']}</span>
+                <span className='pull-right'><span className='subtitle'><FormattedMessage id="project_owner_init"/>:</span> {album['owner']}</span>
               </div><br/>
               <span className='att-line'>
-                <span className='pull-left'><FormattedMessage id="city"/>: {album['city']}</span>
-                <span className='pull-right'><FormattedMessage id="street"/>: {album['street']}</span>
+                <span className='pull-left'><span className='subtitle'><FormattedMessage id="city"/>:</span> {album['city']}</span>
+                <span className='pull-right'><span className='subtitle'><FormattedMessage id="bank"/>:</span> {album['bank']}</span>
               </span>
               <span className='att-line'>
-                <span className='pull-left'><FormattedMessage id="bank"/>: {album['bank']}</span>
-                <span className='pull-right'><FormattedMessage id="due_date"/>: {album['due-date']}</span>
+                <span className='pull-left'><span className='subtitle'><FormattedMessage id="street"/>:</span> {album['street']}</span>
+                <span className='pull-right'><span className='subtitle'><FormattedMessage id="due_date"/>:</span> {album['issue_date']}</span>
               </span>
             </div>
             <div id={'chart-div-' + album.id} ref={'chart-div-' + album.id} className='chart-div'></div>

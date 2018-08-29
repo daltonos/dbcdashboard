@@ -2,10 +2,10 @@
 var chart = c3.generate({
     data: {
         columns: [
-            ['In', oProject['total-amount-already-in']],
+            ['In', oProject['total_amount_in']],
               ['base', 120],
-              ['Out', oProject['total-amount-outstanding']],
-              ['max', oProject['total-funding-goal']],
+              ['Out', oProject['total_amount_out']],
+              ['max', oProject['total_funding_goal']],
               ['min', oProject['minimum-funding-goal']]
         ],
         type: 'gauge',
